@@ -1,4 +1,4 @@
-#Creating frontend VM for hoting website
+#Creating frontend VM for hosting website
 
 resource "azurerm_network_interface" "frontend-nic" {
   name                = "frontend-nic"
