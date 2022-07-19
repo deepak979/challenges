@@ -31,7 +31,6 @@ resource "azurerm_windows_virtual_machine" "frontend" {
   source_image_reference {
     publisher = var.vm_publisher
     offer     = var.vm_offer
-    sku       = var.vm_sku
   }
   depends_on = [
     azurerm_network_interface.frontend-nic
@@ -71,7 +70,6 @@ resource "azurerm_windows_virtual_machine" "midtier" {
   source_image_reference {
     publisher = var.vm_publisher
     offer     = var.vm_offer
-    sku       = var.vm_sku
   }
   depends_on = [
     azurerm_network_interface.midtier-nic
