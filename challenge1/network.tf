@@ -41,6 +41,10 @@ resource "azurerm_subnet" "frontend" {
 resource "azurerm_subnet_network_security_group_association" "frontend" {
   subnet_id                 = azurerm_subnet.frontend.id
   network_security_group_id = azurerm_network_security_group.frontend.id
+  depends_on = [
+    azurerm_subnet.frontend,
+    azurerm_network_security_group.frontend
+  ]
 }
 
 resource "azurerm_network_security_group" "midtier" {
@@ -64,6 +68,10 @@ resource "azurerm_subnet" "midtier" {
 resource "azurerm_subnet_network_security_group_association" "midtier" {
   subnet_id                 = azurerm_subnet.midtier.id
   network_security_group_id = azurerm_network_security_group.midtier.id
+  depends_on = [
+    azurerm_subnet.midtier,
+    azurerm_network_security_group.midtier
+  ]
 }
 
 resource "azurerm_network_security_group" "backend" {
@@ -87,4 +95,8 @@ resource "azurerm_subnet" "backend" {
 resource "azurerm_subnet_network_security_group_association" "frontend" {
   subnet_id                 = azurerm_subnet.backend.id
   network_security_group_id = azurerm_network_security_group.backend.id
+  depends_on = [
+    azurerm_subnet.backend,
+    azurerm_network_security_group.backend
+  ]
 }
