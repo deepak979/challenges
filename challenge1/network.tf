@@ -14,6 +14,17 @@ resource "azurerm_network_security_group" "frontend" {
   location            = local.location
   resource_group_name = local.rg_name
   tags                = local.tags
+  security_rule {
+    name                       = "inboudrule"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_subnet" "frontend" {
@@ -25,6 +36,11 @@ resource "azurerm_subnet" "frontend" {
     azurerm_virtual_network.vnet,
     azurerm_network_security_group.frontend
   ]
+}
+
+resource "azurerm_subnet_network_security_group_association" "frontend" {
+  subnet_id                 = azurerm_subnet.frontend.id
+  network_security_group_id = azurerm_network_security_group.frontend.id
 }
 
 resource "azurerm_network_security_group" "midtier" {
@@ -45,6 +61,11 @@ resource "azurerm_subnet" "midtier" {
   ]
 }
 
+resource "azurerm_subnet_network_security_group_association" "midtier" {
+  subnet_id                 = azurerm_subnet.midtier.id
+  network_security_group_id = azurerm_network_security_group.midtier.id
+}
+
 resource "azurerm_network_security_group" "backend" {
   name                = "backend-nsg" 
   location            = local.location
@@ -61,4 +82,9 @@ resource "azurerm_subnet" "backend" {
     azurerm_virtual_network.vnet,
     azurerm_network_security_group.backend
   ]
+}
+
+resource "azurerm_subnet_network_security_group_association" "frontend" {
+  subnet_id                 = azurerm_subnet.backend.id
+  network_security_group_id = azurerm_network_security_group.backend.id
 }
