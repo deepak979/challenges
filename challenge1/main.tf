@@ -41,8 +41,7 @@ module "main"{
     windows_password     = random_password.windows_vm.result
     admin_username       = "username of admin"
     vm_publisher         = "MicrosoftWindowsServer"
-    vm_offer             = "WindowsServer"
-    vm_sku               = "2019-Datacenter"
+    vm_offer             = "2019-Datacenter"
     sql_admin            ="username of sql admin"
     depends_on = [
     azurerm_subnet.frontend,
