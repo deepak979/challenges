@@ -18,6 +18,7 @@ resource "azurerm_windows_virtual_machine" "frontend" {
   size                = var.frontend_vm_size
   admin_username      = var.admin_username
   admin_password      = var.windows_password 
+  tags                = var.tags
   network_interface_ids = [
     azurerm_network_interface.frontend-nic.id,
   ]
@@ -57,6 +58,7 @@ resource "azurerm_windows_virtual_machine" "midtier" {
   size                = var.midtier_vm_size
   admin_username      = var.admin_username
   admin_password      = var.windows_password 
+  tags                = var.tags
   network_interface_ids = [
     azurerm_network_interface.midtier-nic.id,
   ]
